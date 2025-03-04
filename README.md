@@ -43,7 +43,7 @@ This will open the app in your browser at http://localhost:3000. The page will r
 ## Available Scripts
 In the project directory, you can run the following commands:
 
-`npm start`
+   `npm start`
 Runs the app in development mode.
 Open http://localhost:3000 to view it in your browser.
 The page will reload when you make changes, and any lint errors will be shown in the console.
