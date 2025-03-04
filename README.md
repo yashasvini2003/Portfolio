@@ -24,13 +24,13 @@ A professional, responsive portfolio website built with ReactJS to showcase my s
 
 2. Navigate to the project directory:
 
- ```bash
- cd portfolio
+   ```bash
+   cd portfolio
 
 3. Install dependencies:
 
- ```bash
- npm install
+   ```bash
+   npm install
 
 ## Steps to Run Locally
 
