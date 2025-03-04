@@ -38,6 +38,7 @@ A professional, responsive portfolio website built with ReactJS to showcase my s
 
    ```bash
    npm start
+
 This will open the app in your browser at http://localhost:3000. The page will reload when you make changes, and you may also see lint errors in the console.
 
 ## Available Scripts
@@ -45,17 +46,20 @@ In the project directory, you can run the following commands:
 
    ```bash
    npm start
+
 Runs the app in development mode.
 Open http://localhost:3000 to view it in your browser.
 The page will reload when you make changes, and any lint errors will be shown in the console.
 
    ```bash
    npm test
+
 Launches the test runner in interactive watch mode.
 For more information, see the section on running tests.
 
    ```bash
    npm run build
+
 Builds the app for production to the build folder.
 This creates an optimized production build for the best performance. The build is minified, and filenames include hashes for efficient caching. Your app is ready to be deployed!
 
@@ -63,7 +67,8 @@ For more details, see the deployment documentation.
 
    ```bash
    npm run eject
-Note: This is a one-way operation. Once you eject, you can't go back!
+
+##Note: This is a one-way operation. Once you eject, you can't go back!
 
 If you're not satisfied with the build tool and configuration choices, you can eject at any time. This command will remove the single build dependency from your project, copying all the configuration files and transitive dependencies (e.g., webpack, Babel, ESLint) directly into your project so you have full control over them.
 
