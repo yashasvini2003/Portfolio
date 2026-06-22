@@ -1,12 +1,12 @@
 import { ArrowRight, ChevronDown, Download, Mail } from "lucide-react";
 import { useState } from "react";
-import ScrollMarker from "../components/ScrollMarker";
+import SectionMarker from "../components/ScrollMarker";
 import { highlights } from "../data/highlights";
 
 function Home() {
   return (
     <section id="home" className="hero-section">
-      <ScrollMarker number="01" label="Home" />
+      <SectionMarker number="01" label="Home" />
 
       <div className="hero-main">
         <div className="hero-left">
@@ -90,7 +90,6 @@ function HeroAvatar() {
 
   return (
     <div className="avatar-stage">
-      <div className="avatar-glow" />
       <div className="avatar-depth-shadow" />
       <div className="avatar-blend-overlay" />
 
