@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="YB logo">
+  <defs>
+    <linearGradient id="yb" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#c79bff"/>
+      <stop offset="0.55" stop-color="#9b5cff"/>
+      <stop offset="1" stop-color="#e56fb4"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="#050717"/>
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="none" stroke="url(#yb)" stroke-width="2"/>
+  <text x="32" y="40" text-anchor="middle" fill="url(#yb)" font-family="Arial, sans-serif" font-size="27" font-weight="900" letter-spacing="-2">YB</text>
+</svg>
