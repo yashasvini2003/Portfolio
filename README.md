@@ -1,108 +1,183 @@
-# vinext-starter
+# Yashasvini Bhanuraj | Portfolio
 
-A clean full-stack starter running on
-[vinext](https://github.com/cloudflare/vinext), with optional Cloudflare D1 and
-Drizzle support.
+A responsive personal portfolio showcasing my work across software development,
+business analysis, UI/UX design, and project analysis. The website brings
+together my professional experience, academic and client projects, technical
+skills, achievements, certifications, volunteering, resume, and contact
+information in one interactive experience.
 
-## Prerequisites
+## Portfolio Highlights
 
-- Node.js `>=22.13.0`
-- Linux with `flock`, `curl`, and GNU `timeout`
+- Cinematic animated introduction on the homepage
+- Synchronized voice and character lip movement in the introduction video
+- Automatic video playback when the homepage becomes visible
+- Sound-first playback with a mute/unmute control and browser-safe fallback
+- Responsive layouts for desktop, laptop, tablet, and mobile screens
+- Light and dark themes with the selected preference saved in the browser
+- Smooth section navigation and active-section indicators
+- Filterable project cards with direct GitHub repository links
+- Categorized achievements, certifications, and volunteering experience
+- Certificate and badge previews
+- Downloadable resume
+- Functional contact form with clear success and error messages
+- Accessible labels, keyboard-friendly controls, and reduced-motion support
 
-## Sites Lifecycle
+## Technologies Used
 
-The Sites lifecycle CLI runs the locked dependency install before returning this checkout. Edit the source under `app/`, then checkpoint when a coherent milestone is ready to inspect or share. The remote Sites builder runs `npm run build` against the pushed commit. Do not repeat install or build as a normal pre-checkpoint step.
+| Technology | Purpose |
+| --- | --- |
+| React 19 | Builds the portfolio interface from reusable components |
+| TypeScript | Adds type safety and improves maintainability |
+| Vite | Provides the local development server and fast module updates |
+| Vinext | Connects the React interface to the current application structure and production build |
+| CSS | Controls the responsive layout, themes, animations, glass effects, and visual styling |
+| Lucide React | Supplies consistent interface icons |
+| React Icons | Supplies branded GitHub and LinkedIn icons |
+| Intersection Observer API | Detects when sections and the homepage video enter or leave the viewport |
+| Local Storage | Remembers the visitor's selected light or dark theme |
+| FormSubmit | Sends contact-form messages to the configured portfolio email address |
 
-This starter does not use `wrangler.jsonc`.
+## How the Website Works
 
-`install:ci` is intentionally a single, non-retrying `npm ci`. It refuses a concurrent install for the same project, consumes a matching image-seeded npm cache with `--prefer-offline` while retaining registry fallback for a missing cache object, otherwise downloads and verifies the complete vinext tarball recorded in `package-lock.json`, limits npm to one socket, and terminates a stalled install. `build` applies a short timeout and then validates the Sites artifact. These helpers target Linux and use GNU `timeout`; they are not native macOS scripts.
+### Application Structure
 
-Scripts that need writable project-scoped home, npm, XDG, and temporary paths use `scripts/sites-env.sh`. The `dev` and `start` scripts honor the caller's runtime environment and keep Wrangler logs inside the checkout. The generated `.sites-runtime/` directory is disposable and ignored by Git.
+`app/page.tsx` loads the main portfolio component from `src/App.tsx`.
+`src/App.tsx` combines the navigation and seven portfolio sections:
 
-## Included Shape
+1. Home
+2. About
+3. Professional Experience
+4. Projects
+5. Skills
+6. Achievements and Recognition
+7. Contact
 
-- edit site code under `app/`
-- `app/chatgpt-auth.ts` provides optional dispatch-owned ChatGPT sign-in helpers
-- `.openai/hosting.json` declares optional Sites D1 and R2 bindings
-- `vite.config.ts` simulates declared bindings for local development
-- `db/index.ts` reads the D1 binding from the Cloudflare Worker environment
-- `db/schema.ts` starts intentionally empty
-- `examples/d1/` contains an optional D1 example surface
-- `drizzle.config.ts` supports local migration generation when needed
+Each section is kept in its own component under `src/sections`, while shared
+interface elements such as the navigation bar, section headings, scroll
+markers, and homepage video are stored under `src/components`.
 
-## Workspace Auth Headers
+### Homepage Video
 
-OpenAI workspace sites can read the current user's email from
-`oai-authenticated-user-email`.
+The homepage introduction is handled by
+`src/components/VideoIntro.tsx`. The component:
 
-SIWC-authenticated workspace sites may also receive
-`oai-authenticated-user-full-name` when the user's SIWC profile has a non-empty
-`name` claim. The full-name value is percent-encoded UTF-8 and is accompanied by
-`oai-authenticated-user-full-name-encoding: percent-encoded-utf-8`.
+- loads the optimized MP4 video and matching poster image from `public`;
+- attempts to start the introduction with sound;
+- falls back safely when a browser blocks audible autoplay;
+- starts sound after the visitor's first interaction when required;
+- provides a visible mute/unmute button;
+- restarts the introduction when the homepage becomes active again; and
+- pauses the video after the visitor leaves the homepage.
 
-Treat the full name as optional and fall back to email when it is absent:
+The audio and video are stored together in the same MP4 file, which preserves
+the intended lip synchronization.
 
-```tsx
-import { headers } from "next/headers";
+> Modern browsers may block audible autoplay until the visitor interacts with
+> the page. This is a browser security rule, not a website error. The portfolio
+> handles it by enabling sound on the first click/tap or through the sound
+> button.
 
-export default async function Home() {
-  const requestHeaders = await headers();
-  const email = requestHeaders.get("oai-authenticated-user-email");
-  const encodedFullName = requestHeaders.get("oai-authenticated-user-full-name");
-  const fullName =
-    encodedFullName &&
-    requestHeaders.get("oai-authenticated-user-full-name-encoding") ===
-      "percent-encoded-utf-8"
-      ? decodeURIComponent(encodedFullName)
-      : null;
+### Responsive Design
 
-  const displayName = fullName ?? email;
-  // ...
-}
+Responsive rules in `app/globals.css` adjust typography, navigation, section
+spacing, cards, buttons, the homepage composition, and video framing across
+different screen sizes. The mobile navigation is controlled through React
+state in `src/App.tsx` and `src/components/Navbar.tsx`.
+
+### Theme Selection
+
+Light mode is the default theme. Visitors can switch between light and dark
+themes from the navigation bar. The selected theme is stored in the browser
+under `portfolio-theme-v2`, so it remains selected on the visitor's device.
+
+### Projects and Achievements
+
+Project information is stored in `src/data/projects.ts`. The project and
+achievement toolbars use React state to filter the visible cards without
+reloading the page. Repository buttons open the corresponding GitHub projects
+in a new tab.
+
+### Contact Form
+
+The contact form submits the visitor's name, email address, and message to
+FormSubmit. Messages are delivered to the email address configured in
+`src/sections/Contact.tsx`. The form does not store submissions in this
+repository and does not require a database.
+
+## Project Structure
+
+```text
+Yashasvini-Portfolio/
+├── app/
+│   ├── globals.css              # Global themes, responsive rules, and animations
+│   ├── layout.tsx               # Page metadata and document layout
+│   └── page.tsx                 # Portfolio page entry
+├── public/
+│   ├── credentials/             # Certificates, badges, and achievement images
+│   ├── Yashasvini_Bhanuraj_Resume.pdf
+│   ├── yashasvini-cinematic-intro-4k.mp4
+│   └── yashasvini-cinematic-poster-4k.webp
+├── src/
+│   ├── components/              # Shared interface components
+│   ├── data/                    # Navigation, highlights, and project data
+│   ├── sections/                # Portfolio page sections
+│   ├── App.tsx                  # Main application composition and theme state
+│   └── main.tsx                 # Client entry
+├── tests/                       # Rendered-page verification
+├── package.json                 # Dependencies and project commands
+├── tsconfig.json                # TypeScript configuration
+└── vite.config.ts               # Development and build configuration
 ```
 
-## Optional Dispatch-Owned ChatGPT Sign-In
+## Run Locally
 
-Import the ready-to-use helpers from `app/chatgpt-auth.ts` when the site needs
-optional or required ChatGPT sign-in:
+### Requirements
 
-- Use `getChatGPTUser()` for optional signed-in UI.
-- Use `requireChatGPTUser(returnTo)` for server-rendered pages that should send
-  anonymous visitors through Sign in with ChatGPT.
-- Use `chatGPTSignInPath(returnTo)` and `chatGPTSignOutPath(returnTo)` for
-  browser links or actions.
-- Pass a same-origin relative `returnTo` path for the destination after sign-in
-  or sign-out. The helper validates and safely encodes it.
-- Mark protected pages with `export const dynamic = "force-dynamic"` because
-  they depend on per-request identity headers.
+- Node.js 22.13 or newer
+- npm
 
-Dispatch owns `/signin-with-chatgpt`, `/signout-with-chatgpt`, `/callback`, the
-OAuth cookies, and identity header injection. Do not implement app routes for
-those reserved paths. Routes that do not import and call the helper remain
-anonymous-compatible.
+### Commands
 
-SIWC establishes identity only; it does not prove workspace membership. Use the
-Sites hosting platform's access policy controls for workspace-wide restrictions,
-or enforce explicit server-side membership or allowlist checks.
+```bash
+npm install
+npx vite
+```
 
-Use SIWC for account pages, user-specific dashboards, saved records, and write
-actions tied to the current ChatGPT user. Leave public content anonymous.
+Open the local address displayed in the terminal, normally:
 
-## Diagnostic Commands
+```text
+http://localhost:5173/
+```
 
-- `npm run install:ci`: perform the one bounded lockfile install
-- `npm run dev`: start the Vite/Vinext development server
-- `npm run build`: build and validate the deployable Sites artifact
-- `npm run start`: start the built Vinext application
-- `npm test`: build, validate, and verify the rendered development-preview metadata
-- `npm run validate:artifact`: recheck an existing artifact's manifest and ESM `default.fetch` export
-- `npm run db:generate`: generate Drizzle migrations after schema changes
+Press `Ctrl + C` in the terminal to stop the local server.
 
-Use build and validation commands for targeted diagnosis after a remote failure, not as part of the normal checkpoint path.
+Do not open the source files directly and do not use the VS Code Live Server
+extension. The project should be started through Vite.
 
-The timeout defaults can be overridden for a controlled canary with `SITES_INSTALL_TIMEOUT`, `SITES_INSTALL_KILL_AFTER`, `SITES_BUILD_TIMEOUT`, and `SITES_BUILD_KILL_AFTER`. A timeout fails the command; the helpers never retry an unchanged install or build.
+## Available Commands
 
-## Learn More
+| Command | Description |
+| --- | --- |
+| `npx vite` | Starts the local development server |
+| `npm test` | Builds and verifies the rendered portfolio |
+| `npm run build` | Creates and validates the production build |
+| `npm run lint` | Checks the source for code-quality issues |
 
-- [vinext Documentation](https://github.com/cloudflare/vinext)
-- [Drizzle D1 Guide](https://orm.drizzle.team/docs/get-started/d1-new)
+## Data and Privacy
+
+- Visitors do not need an account to view a public deployment of this portfolio.
+- The portfolio does not use a user database.
+- Theme preference is stored only in the visitor's browser.
+- Contact-form submissions are sent through FormSubmit to the configured email.
+- No passwords, authentication tokens, or private API keys are included in the repository.
+
+## Deployment
+
+The portfolio can be made publicly available through a hosting provider. A
+public deployment link can be opened directly by recruiters and other visitors
+without requiring an account. Hosting-specific build settings should be checked
+before deployment because providers may use different output formats.
+
+---
+
+Designed and built by **Yashasvini Bhanuraj**.
