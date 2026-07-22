@@ -53,8 +53,26 @@ Yashasvini-Portfolio/
 ├── package.json                 # Dependencies and commands
 ├── tsconfig.json                # TypeScript configuration
 ├── vercel.json                  # Vercel build configuration
-└── vite.config.ts               # Vite configuration
+├── vite.config.ts               # Active Vite configuration
+├── app/                         # Preserved original Vinext/Next entry files
+├── build/                       # Preserved original Sites build helper
+├── db/ and drizzle/             # Preserved unused starter database scaffold
+├── examples/                    # Preserved original starter examples
+├── scripts/ and tests/          # Preserved original build/test helpers
+└── worker/                      # Preserved original Cloudflare worker entry
 ```
+
+## Preserved Starter Files
+
+This full-repository edition keeps the original Vinext, ChatGPT Sites,
+Cloudflare Worker, database, Drizzle, example, and test files so the repository
+history and earlier structure remain complete. They are not used by the active
+Vercel build. Vercel starts from `index.html`, `src/main.tsx`, and `src/App.tsx`,
+and produces the deployable website in `dist`.
+
+The portfolio itself does not use a database, authentication, Cloudflare
+Worker, or ChatGPT sign-in. Those preserved folders can remain in the
+repository without affecting the website.
 
 ## Run Locally
 
